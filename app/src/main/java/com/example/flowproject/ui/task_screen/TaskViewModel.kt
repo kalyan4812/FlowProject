@@ -35,7 +35,8 @@ class TaskViewModel @Inject constructor(private val taskRepository: TaskReposito
 
             is taskState -> {
                 viewModelScope.launch {
-                    taskRepository.insertTask(event.task.copy(isDone = event.isDone))
+                    println(event.task.title+" "+event.task.id)
+                    taskRepository.updateTask(event.task.copy(isDone = event.isDone))
                 }
 
             }

@@ -15,6 +15,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.flowproject.R
 import com.example.flowproject.adapters.TaskScreenAdapter
+import com.example.flowproject.databinding.FragmentAddTaskBinding
 import com.example.flowproject.models.Task
 import com.example.flowproject.ui.add_task_screen.AddTaskScreenEvent.*
 import com.example.flowproject.ui.task_screen.TaskScreenEvent
@@ -36,6 +37,7 @@ import java.lang.StringBuilder
 class AddTaskFragment : Fragment() {
 
     val viewModel: AddTaskViewModel by viewModels()
+    private lateinit var binding: FragmentAddTaskBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -50,16 +52,17 @@ class AddTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding= FragmentAddTaskBinding.bind(view)
         subscribeToEvents()
         setUpListeners()
         viewModel.onEvent(onScreenLoaded(args.taskId))
     }
 
     private fun setUpListeners() {
-        floating_add_task.setOnClickListener {
+        binding.floatingAddTask.setOnClickListener {
             viewModel.onEvent(onSaveTask)
         }
-        ed_task_title.addTextChangedListener(object : TextWatcher {
+        binding.edTaskTitle.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -73,7 +76,7 @@ class AddTaskFragment : Fragment() {
             }
         })
 
-        ed_task_description.addTextChangedListener(object : TextWatcher {
+        binding.edTaskDescription.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
 
             }
@@ -106,16 +109,22 @@ class AddTaskFragment : Fragment() {
 
     private fun subscribeToEvents() {
         collectLifecycleAwareFlow(viewModel.live_title) {
-            ed_task_title.clearComposingText()
-            ed_task_title.setText(it)
-            if (it != null && it.isNotBlank())
-                ed_task_title.setSelection(it.length)
+            binding.edTaskTitle.apply {
+                clearComposingText()
+                setText(it)
+                if (it.isNotBlank()){
+                    setSelection(it.length)
+                }
+            }
         }
         collectLifecycleAwareFlow(viewModel.live_description) {
-            ed_task_description.clearComposingText()
-            ed_task_description.setText(it)
-            if (it != null && it.isNotBlank())
-                ed_task_description.setSelection(it.length)
+            binding.edTaskDescription.apply {
+                clearComposingText()
+                setText(it)
+                if (it.isNotBlank()){
+                    setSelection(it.length)
+                }
+            }
         }
 
         collectLifecycleAwareSharedFlow(viewModel.ui_events) { event ->

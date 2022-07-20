@@ -16,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.flowproject.R
 import com.example.flowproject.adapters.TaskScreenAdapter
 import com.example.flowproject.adapters.TaskScreenAdapter.EVENTS.*
+import com.example.flowproject.databinding.FragmentTaskScreenBinding
 import com.example.flowproject.models.Task
 import com.example.flowproject.utils.UIEvent
 import com.google.android.material.snackbar.Snackbar
@@ -31,6 +32,8 @@ class TaskScreenFragment : Fragment() {
     val viewModel: TaskViewModel by viewModels()
     private lateinit var taskScreenAdapter: TaskScreenAdapter
 
+    private lateinit var binding: FragmentTaskScreenBinding
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -41,6 +44,7 @@ class TaskScreenFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding=FragmentTaskScreenBinding.bind(view)
         initRecycler()
         loadData()
         subscribeToEvents()
@@ -49,6 +53,7 @@ class TaskScreenFragment : Fragment() {
 
     private fun loadData() {
         collectLifecycleAwareFlow(viewModel.getFlowTasks()) {
+            println(it)
             taskScreenAdapter.setList(it)
         }
     }
@@ -61,7 +66,7 @@ class TaskScreenFragment : Fragment() {
     }
 
     private fun setUpListeners() {
-        floating_add_task.setOnClickListener {
+        binding.floatingAddTask.setOnClickListener {
             viewModel.OnEventRecieved(TaskScreenEvent.addTaskClick)
         }
 

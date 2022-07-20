@@ -68,9 +68,9 @@ class TaskScreenAdapter : RecyclerView.Adapter<TaskScreenAdapter.TaskViewHolder>
                     onClickListener.onClick(differ.getCurrentList().get(pos), EVENTS.DELETED)
                 }
             }
-            if (task.isDone) {
-                checkbox.isChecked = true
-            }
+
+            checkbox.isChecked = task.isDone
+
             checkbox.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
                 override fun onCheckedChanged(p0: CompoundButton?, checked: Boolean) {
                     val pos = holder.adapterPosition
