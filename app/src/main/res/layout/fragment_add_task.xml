@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.add_task_screen.AddTaskFragment">
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ed_task_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/type_task_title"
+        android:padding="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/editbox_bg"
+        android:minHeight="50dp"
+        android:backgroundTint="@null"
+        app:layout_constraintTop_toTopOf="parent" />
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/ed_task_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/type_task_description"
+        android:padding="3dp"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/editbox_bg"
+        android:minHeight="50dp"
+        android:backgroundTint="@null"
+        app:layout_constraintTop_toBottomOf="@id/ed_task_title" />
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floating_add_task"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:background="@null"
+        android:elevation="10dp"
+        app:backgroundTint="@android:color/white"
+        app:borderWidth="0dp"
+        app:elevation="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:maxImageSize="46dp"
+        app:srcCompat="@drawable/ic_baseline_done_24"
+        app:tint="@null" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
