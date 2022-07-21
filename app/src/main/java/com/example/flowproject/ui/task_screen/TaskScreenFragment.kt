@@ -68,28 +68,25 @@ class TaskScreenFragment : Fragment() {
     private fun setUpListeners() {
         binding.floatingAddTask.setOnClickListener {
             viewModel.OnEventRecieved(TaskScreenEvent.addTaskClick)
+
         }
-
-        taskScreenAdapter.setOnClickListener(object : TaskScreenAdapter.ClickListener {
-            override fun onClick(task: Task, event: TaskScreenAdapter.EVENTS) {
-                when (event) {
-                    SELECTED -> {
-                        viewModel.OnEventRecieved(TaskScreenEvent.onTaskClick(task))
-                    }
-                    DELETED -> {
-                        viewModel.OnEventRecieved(TaskScreenEvent.deleteTask(task))
-                    }
-                    CHECKED -> {
-                        viewModel.OnEventRecieved(TaskScreenEvent.taskState(task, true))
-                    }
-                    UNCHECKED -> {
-                        viewModel.OnEventRecieved(TaskScreenEvent.taskState(task, false))
-                    }
-
+        taskScreenAdapter.setOnClickListener { task, event ->
+            when (event) {
+                SELECTED -> {
+                    viewModel.OnEventRecieved(TaskScreenEvent.onTaskClick(task))
                 }
-            }
+                DELETED -> {
+                    viewModel.OnEventRecieved(TaskScreenEvent.deleteTask(task))
+                }
+                CHECKED -> {
+                    viewModel.OnEventRecieved(TaskScreenEvent.taskState(task, true))
+                }
+                UNCHECKED -> {
+                    viewModel.OnEventRecieved(TaskScreenEvent.taskState(task, false))
+                }
 
-        })
+            }
+        }
     }
 
     private fun subscribeToEvents() {

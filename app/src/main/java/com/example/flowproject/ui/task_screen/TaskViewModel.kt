@@ -1,11 +1,9 @@
 package com.example.flowproject.ui.task_screen
 
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.flowproject.models.Task
 import com.example.flowproject.repositories.TaskRepository
-import com.example.flowproject.ui.Paths
 import com.example.flowproject.ui.task_screen.TaskScreenEvent.*
 import com.example.flowproject.utils.UIEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,7 +22,6 @@ class TaskViewModel @Inject constructor(private val taskRepository: TaskReposito
     fun OnEventRecieved(event: TaskScreenEvent) {
         when (event) {
             is deleteTask -> {
-
                 viewModelScope.launch {
                     deletedTask = event.task
                     taskRepository.deleteTask(event.task)

@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -52,7 +53,7 @@ class AddTaskFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding= FragmentAddTaskBinding.bind(view)
+        binding = FragmentAddTaskBinding.bind(view)
         subscribeToEvents()
         setUpListeners()
         viewModel.onEvent(onScreenLoaded(args.taskId))
@@ -62,35 +63,12 @@ class AddTaskFragment : Fragment() {
         binding.floatingAddTask.setOnClickListener {
             viewModel.onEvent(onSaveTask)
         }
-        binding.edTaskTitle.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(text: Editable?) {
-                viewModel.onEvent(onTitleChange(text.toString()))
-            }
-        })
-
-        binding.edTaskDescription.addTextChangedListener(object : TextWatcher {
-            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
-            }
-
-            override fun afterTextChanged(text: Editable?) {
-
-                viewModel.onEvent(onDescriptionChange(text.toString()))
-            }
-
-        })
+        binding.edTaskTitle.addTextChangedListener {
+            viewModel.onEvent(onTitleChange(it.toString()))
+        }
+        binding.edTaskDescription.addTextChangedListener {
+            viewModel.onEvent(onDescriptionChange(it.toString()))
+        }
     }
 
     fun <T> collectLifecycleAwareFlow(
@@ -112,7 +90,7 @@ class AddTaskFragment : Fragment() {
             binding.edTaskTitle.apply {
                 clearComposingText()
                 setText(it)
-                if (it.isNotBlank()){
+                if (it.isNotBlank()) {
                     setSelection(it.length)
                 }
             }
@@ -121,7 +99,7 @@ class AddTaskFragment : Fragment() {
             binding.edTaskDescription.apply {
                 clearComposingText()
                 setText(it)
-                if (it.isNotBlank()){
+                if (it.isNotBlank()) {
                     setSelection(it.length)
                 }
             }

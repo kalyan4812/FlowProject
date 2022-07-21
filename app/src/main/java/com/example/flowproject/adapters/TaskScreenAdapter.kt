@@ -35,10 +35,6 @@ class TaskScreenAdapter : RecyclerView.Adapter<TaskScreenAdapter.TaskViewHolder>
         differ.submitList(tasks)
     }
 
-    fun getList(): List<Task> {
-        return differ.currentList
-    }
-
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
     }
@@ -71,24 +67,17 @@ class TaskScreenAdapter : RecyclerView.Adapter<TaskScreenAdapter.TaskViewHolder>
 
             checkbox.isChecked = task.isDone
 
-            checkbox.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener {
-                override fun onCheckedChanged(p0: CompoundButton?, checked: Boolean) {
-                    val pos = holder.adapterPosition
-                    if (pos != -1) {
-                        onClickListener.onClick(
-                            differ.getCurrentList().get(pos),
-                            if (checked) EVENTS.CHECKED else EVENTS.UNCHECKED
-                        )
-                    }
+            checkbox.setOnCheckedChangeListener { p0, checked ->
+                val pos = holder.adapterPosition
+                if (pos != -1) {
+                    onClickListener.onClick(
+                        differ.getCurrentList().get(pos),
+                        if (checked) EVENTS.CHECKED else EVENTS.UNCHECKED
+                    )
                 }
-
-            })
-
-
+            }
         }
-
     }
-
 
     override fun getItemCount() =
         differ.currentList.size
@@ -96,9 +85,8 @@ class TaskScreenAdapter : RecyclerView.Adapter<TaskScreenAdapter.TaskViewHolder>
 
     private lateinit var onClickListener: ClickListener
 
-    interface ClickListener {
-        fun onClick(task: Task, event: EVENTS)
-
+    fun interface ClickListener { // fun interface will have exactly one method.
+        fun onClick(task: Task, events: EVENTS)
     }
 
 
@@ -109,6 +97,4 @@ class TaskScreenAdapter : RecyclerView.Adapter<TaskScreenAdapter.TaskViewHolder>
     fun setOnClickListener(clickListener: ClickListener) {
         this.onClickListener = clickListener
     }
-
-
 }
