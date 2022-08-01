@@ -20,11 +20,11 @@ object AppModule {
         return taskDatabase.getTaskDao
     }
 
-    @Singleton
-    @Provides
-    fun provideRepository(taskDao: TaskDao): TaskRepository {
-        return TaskRepository(taskDao)
-    }
+//    @Singleton
+//    @Provides
+//    fun provideRepository(taskDao: TaskDao): TaskRepository {
+//        return TaskRepository(taskDao)
+//    }
 
 
 }
